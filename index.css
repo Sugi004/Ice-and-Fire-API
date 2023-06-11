@@ -45,7 +45,7 @@ body{
 .card{
    padding: 20px 10px 10px 15px; 
    margin-top: 30px;
-   margin-left: 50px;
+   margin-left: 80px;
    margin-right: 20px;
    height: 300px !important ;
    
@@ -67,11 +67,19 @@ body{
     }
   }
 
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 900px) {
     
     #search{
         margin-left: 10px;
         width: 30%;
     
     }
+
+    .card{
+        
+        margin-left: 70px !important;
+        margin-right: 10px !important;
+
+        
+     }
   }
