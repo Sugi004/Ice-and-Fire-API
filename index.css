@@ -18,7 +18,7 @@ body{
 }
 
 #search{
-    margin-left: 10px;
+    margin-left: 0px;
     width: 25%;
     border-radius: 40px;
     padding-left: 10px;
@@ -54,4 +54,24 @@ body{
 .highlight {
     background-color: yellow;
     font-weight: bold;
+  }
+
+  @media only screen and (max-width: 450px) {
+    html{
+        width: 450px;
+    } 
+    #search{
+        margin-left: 10px;
+        width: 40% !important;
+    
+    }
+  }
+
+  @media only screen and (max-width: 800px) {
+    
+    #search{
+        margin-left: 10px;
+        width: 30%;
+    
+    }
   }
