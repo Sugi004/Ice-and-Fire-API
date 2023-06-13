@@ -34,12 +34,12 @@ div.appendChild(icon)
 const url = "https://www.anapioficeandfire.com/api/books"
 
 
+
 async function getData() // Fetching data from url = https://www.anapioficeandfire.com/api/books
 {
     try{
         let res = await fetch(url)
         let data = await res.json()
-        console.log(data)
         constructData(data)
     }
     catch(error)
@@ -49,6 +49,7 @@ async function getData() // Fetching data from url = https://www.anapioficeandfi
     }
 }
 getData()
+
 
 
 async function constructData(data)  // Displaying the fetched data
@@ -102,6 +103,8 @@ async function fetchCharacterData(characterUrl) // Fetches the Data from charact
     throw error;
   }
 }
+
+
 
 function searchAndHighlight(keyword) // Function to Search the typed text in input 
 {
