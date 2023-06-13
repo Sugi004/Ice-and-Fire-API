@@ -27,6 +27,11 @@ body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+#search:focus{
+    border: none;
+    outline: 0px;
+}
+
 .search-icon{
     margin-left: 5px;
     background-color: antiquewhite;
@@ -47,8 +52,8 @@ body{
    margin-top: 30px;
    margin-left: 80px;
    margin-right: 20px;
-   height: 300px !important ;
-   
+   min-height: 450px !important;
+   max-height: 1000px !important;
 }
 
 .highlight {

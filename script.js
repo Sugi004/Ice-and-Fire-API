@@ -1,3 +1,5 @@
+// Creating the necessary elements using DOM
+
 let root = document.createElement("div")
 root.setAttribute("class", "container-fluid")
 root.setAttribute("id", "root")
@@ -32,22 +34,26 @@ div.appendChild(icon)
 const url = "https://www.anapioficeandfire.com/api/books"
 
 
-async function getData(){
+async function getData() // Fetching data from url = https://www.anapioficeandfire.com/api/books
+{
     try{
         let res = await fetch(url)
         let data = await res.json()
         console.log(data)
         constructData(data)
     }
-    catch(error){
+    catch(error)
+    {
         console.log(error)
+        throw error;
     }
 }
 getData()
 
 
-async function constructData(data){
-    data.forEach(e => {
+async function constructData(data)  // Displaying the fetched data
+{
+    data.forEach(async (e) => {
         let div = document.createElement("div")
         div.innerHTML = `<div class="card " style="width: 20rem; >
             <div   div class="card-body" id="text"  >
@@ -57,6 +63,11 @@ async function constructData(data){
                 <p class="cardText"><strong>Authors: </strong> ${e.authors[0]}</p>
                 <p class="cardText" ><strong>Publisher Name: </strong> ${e.publisher}</p>
                 <p class="cardText"><strong>Released Date: </strong>${e.released}</p>
+                <p class="cardText"><strong>Characters: </strong>
+                  <span><ul>
+                    ${await getCharacterList(e.characters)}  
+                  </ul></span>
+                </p>
                
             </div>
         </div>`    
@@ -64,46 +75,42 @@ async function constructData(data){
     });
 }
 
-// async function characterData(i){
-//     let res = await fetch(url)
-//     let data = await res.json()
-//     data.forEach(e =>{
-//        let char = e.characters[0]
-//         getCharData(char)
-        
-    
-//     })
-// }characterData()
-
-// async function getCharData(char){
-    
-    
-//     let res = await fetch(char)
-//     let data = await res.json()
-//     characterRender(data)
-//     console.log(data)
-    
-// }
 
 
-// function highlightText() {
-   
-// let searchText = document.getElementById("search").value.trim();
-// if (searchText) {
-// let text = document.getElementById("text").innerHTML;
-// let re = new RegExp(searched,"gi"); // search for all instances
-// let newText = text.replace(re,  `<mark>${searchText}</mark>`);
-// document.getElementById("text").innerHTML = newText;
-// }
-// }
+async function getCharacterList(characterUrls)  // Getting th passed URL and slicing it to dsplay 5 Characters
+{
+  let characterList = "";
+  
+  const charactersToFetch = characterUrls.slice(10, 16); // We can just change the value to display more characters
 
-function searchAndHighlight(keyword) {
-    const text = document.querySelectorAll('.cardText');
+  for (let e of charactersToFetch) {
+    let character = await fetchCharacterData(e); // Passing the character URL to fetch data 
+    characterList += `<li class="cardText">${character.name}</li>`; // Displaying as a list
+  }
+
+  return characterList;
+}
+
+async function fetchCharacterData(characterUrl) // Fetches the Data from character URL and parsing to JSON
+{
+  try {
+    let res = await fetch(characterUrl);
+    let data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+function searchAndHighlight(keyword) // Function to Search the typed text in input 
+{
+    let text = document.querySelectorAll('.cardText');
     text.forEach((title) => {
-      const html = title.innerHTML;
-      const highlightedHTML = html.replace(new RegExp(keyword, 'gi'), (match) => `<span class="highlight">${match}</span>`);
+      let html = title.innerHTML;
+      let highlightedHTML = html.replace(new RegExp(keyword, 'gi'), (match) => `<span class="highlight">${match}</span>`);
       title.innerHTML = highlightedHTML;
-      Array.from(title.childNodes).forEach((child) => {
+      Array.from(title.childNodes).forEach((child) => {  // Checks whether it is HTML or text and compares it
         if (child.nodeType === Node.TEXT_NODE) {
           const span = document.createElement('span');
           span.innerHTML = child.textContent.replace(new RegExp(keyword, 'gi'), (match) => `<span class="highlight">${match}</span>`);
@@ -113,9 +120,11 @@ function searchAndHighlight(keyword) {
     });
   }
 
-  function handleSearch() {
-    const searchInput = document.getElementById('search');
-    const keyword = searchInput.value.trim();
+
+  function handleSearch() // This Handles the typed text in the input
+  {
+    let searchInput = document.getElementById('search');
+    let keyword = searchInput.value.trim();
     if (keyword !== '') {
       const highlightedText = document.querySelectorAll('.highlight');
       highlightedText.forEach((text) => {
@@ -125,6 +134,6 @@ function searchAndHighlight(keyword) {
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const searchButton = document.getElementById('searchButton');
+  document.addEventListener('DOMContentLoaded', () => { // 
+    let searchButton = document.getElementById('searchButton');
     searchButton.addEventListener('click', handleSearch);})
