@@ -39,12 +39,11 @@ body{
     border-radius: 50px;
 }
 
-
-
 .card-wrapper{
     display: flex;
     flex-flow: row wrap;
-    gap:10px
+    gap:10px;
+    margin-bottom: 20px !important;
    
 }
 .card{
@@ -54,6 +53,7 @@ body{
    margin-right: 20px;
    min-height: 450px !important;
    max-height: 1000px !important;
+
 }
 
 .highlight {
@@ -88,3 +88,4 @@ body{
         
      }
   }
+
